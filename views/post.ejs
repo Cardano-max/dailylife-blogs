@@ -1,0 +1,63 @@
+<div class="bg-white overflow-hidden">
+    <div class="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+      <div class="hidden lg:block absolute top-0 bottom-0 left-3/4 w-screen bg-gray-50"></div>
+      <div class="mx-auto text-base max-w-prose lg:grid lg:grid-cols-2 lg:gap-8 lg:max-w-none">
+        <div>
+          <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+            <time datetime="<%= post.createdAt %>"><%= new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></time>
+          </h2>
+          <h1 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            <%= post.title %>
+          </h1>
+          <% if (post.isHot) { %>
+          <div class="mt-4 flex items-center">
+            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+              </svg>
+              Hot Post
+            </span>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <div class="mt-8 lg:grid lg:grid-cols-2 lg:gap-8">
+        <div class="relative lg:row-start-1 lg:col-start-2">
+          <div class="relative text-base mx-auto max-w-prose lg:max-w-none">
+            <figure>
+              <div class="aspect-w-12 aspect-h-7 lg:aspect-none">
+                <img 
+                  class="rounded-lg shadow-lg object-cover object-center" 
+                  src="<%= post.imageUrl || 'https://via.placeholder.com/1184x1376?text=Daily+Life+Blog' %>" 
+                  alt="<%= post.title %>"
+                  width="1184"
+                  height="1376"
+                >
+              </div>
+            </figure>
+          </div>
+        </div>
+        <div class="mt-8 lg:mt-0">
+          <div class="text-base max-w-prose mx-auto lg:max-w-none">
+            <div class="prose prose-indigo prose-lg text-gray-500 mx-auto lg:max-w-none">
+              <%= post.content %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Related posts -->
+      <% if (relatedPosts && relatedPosts.length > 0) { %>
+      <div class="mt-16">
+        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">
+          Related Posts
+        </h2>
+        <div class="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <% relatedPosts.forEach(relatedPost => { %>
+            <%- include('./partials/post-card', { post: relatedPost }) %>
+          <% }); %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
