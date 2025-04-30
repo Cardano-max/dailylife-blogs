@@ -21,9 +21,10 @@ const sequelize = new Sequelize(
       idle: 10000
     },
     dialectOptions: {
-      ssl: process.env.NODE_ENV === 'production' ? {
+      ssl: {
         rejectUnauthorized: false
-      } : false
+      },
+      connectTimeout: 60000
     }
   }
 );
@@ -33,6 +34,15 @@ const testConnection = async () => {
   try {
     await sequelize.authenticate();
     console.log('Database connection established successfully.');
+    // Log connection details in non-production environment
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Database config:', {
+        database: process.env.DB_NAME || process.env.MYSQLDATABASE,
+        user: process.env.DB_USER || process.env.MYSQLUSER,
+        host: process.env.DB_HOST || process.env.MYSQLHOST,
+        port: process.env.DB_PORT || process.env.MYSQLPORT || 3306
+      });
+    }
   } catch (error) {
     console.error('Unable to connect to the database:', error);
     console.error('Database config:', {
