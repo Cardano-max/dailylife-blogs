@@ -10,5 +10,3 @@ const basicAuth = (req, res, next) => {
   
   return next();
 };
-
-module.exports = basicAuth;

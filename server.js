@@ -3,6 +3,7 @@ const path = require('path');
 const ejsLayouts = require('express-ejs-layouts');
 const dotenv = require('dotenv');
 
+
 // Load environment variables
 dotenv.config();
 
